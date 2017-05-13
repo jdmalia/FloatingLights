@@ -2,6 +2,7 @@
 #include <QTimer>
 #include <QPainter>
 #include <iostream>
+#include <GLUT/glut.h>
 
 OpenGLWindow::OpenGLWindow ()
     : BaseClass(BaseClass::NoPartialUpdate)
@@ -26,7 +27,22 @@ OpenGLWindow ::~OpenGLWindow ()
 
 void OpenGLWindow::initializeGL()
 {
-    glClearColor(0.0f, 0.0f,0.0f, 1.0f);
+    GLfloat mat_specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat mat_shininess[] = { 50.0 };
+    GLfloat light_position[] = { 1.0, 1.0, -1, 0.0 };
+    glClearColor (0.0, 0.0, 0.0, 0.0);
+    glShadeModel (GL_SMOOTH);
+
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, mat_specular);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SHININESS, mat_shininess);
+    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+    glEnable(GL_DEPTH_TEST);
+
+    //glColorMaterial ( GL_FRONT_AND_BACK, GL_EMISSION ) ;
+    glEnable ( GL_COLOR_MATERIAL ) ;
 
     // Enable Transparency
     glEnable (GL_BLEND);
@@ -42,8 +58,18 @@ void OpenGLWindow::resizeGL(int w, int h)
 
 void OpenGLWindow::paintGL()
 {
+    glPushMatrix();
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glScalef(1,1,1);
     glLoadIdentity();
+    GLUquadricObj *quadric=gluNewQuadric();
+    gluQuadricNormals(quadric, GLU_SMOOTH);
+    glColor4f(1,1,1,.5);
+    gluSphere(quadric, 0.1, 360,360);
+    glTranslatef(.1,.1,0);
+    gluSphere(quadric, 0.1, 360,360);
+    gluDeleteQuadric(quadric);
+    glPopMatrix();
 }
 
 

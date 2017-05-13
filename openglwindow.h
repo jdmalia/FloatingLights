@@ -8,6 +8,8 @@
 #include <QMouseEvent>
 #include <QKeyEvent>
 
+#include "pointlight.h"
+
 class OpenGLWindow: public QOpenGLWindow
 {
     Q_OBJECT
@@ -26,7 +28,6 @@ protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
-
 
     void setupVertex( Eigen::Vector3f& v, Eigen::Vector4f& c );
 

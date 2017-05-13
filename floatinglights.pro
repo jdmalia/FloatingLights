@@ -4,7 +4,9 @@ INCLUDEPATH += .
 
 SOURCES += \
     main.cpp \
-    openglwindow.cpp
+    openglwindow.cpp \
+    pointlight.cpp
 
 HEADERS += \
-    openglwindow.h
+    openglwindow.h \
+    pointlight.h
